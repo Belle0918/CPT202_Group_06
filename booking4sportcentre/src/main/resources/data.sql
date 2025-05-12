@@ -1,6 +1,24 @@
 Use sport_centre;
 ALTER TABLE user_info MODIFY COLUMN balance DOUBLE NOT NULL DEFAULT 0;
 
+create table user_info(
+    id bigint primary key auto_increment,
+    stu_id bigint not null,
+    email varchar(255) not null,
+    first_name varchar(255) not null,
+    last_name varchar(255) not null,
+    dob date not null,
+    address varchar(255) not null,
+    gender int not null,
+    username varchar(255) not null,
+    position varchar(255) not null,
+    password varchar(255) not null,
+    phone_num varchar(255) not null,
+    intro varchar(255) not null,
+    re_date date not null,
+    balance varchar(255) not null
+);
+
 INSERT INTO user_info (stu_id, email, first_name, last_name, dob, address, gender, username, position, password, phone_num, intro, re_date, balance)
 SELECT * FROM (
                   SELECT 1234567 AS stu_id, 'user1@example.com' AS email, 'John' AS first_name, 'Doe' AS last_name, '1990-01-01' AS dob, '123 Main St' AS address, 1 AS gender, 'user1' AS username, 'Student' AS position, 'password1' AS password, '1234567890' AS phone_num, 'Introduction for user1' AS intro, '2024-04-28' AS re_date, '2000'AS balance
@@ -15,6 +33,12 @@ SELECT * FROM (
               ) AS tmp
 WHERE NOT EXISTS (
     SELECT 1 FROM user_info WHERE stu_id = tmp.stu_id
+);
+
+create table admin_info(
+    id bigint primary key auto_increment,
+    username varchar(255) not null,
+    password varchar(255) not null
 );
 
 INSERT INTO admin_info (username, password)
@@ -32,6 +56,18 @@ SELECT * FROM (
 WHERE NOT EXISTS (
     SELECT 1 FROM admin_info WHERE username = tmp.username
 ) LIMIT 5;
+
+create table sport_activity(
+    id bigint primary key auto_increment,
+    name varchar(255) not null,
+    date date not null,
+    start_time time not null,
+    end_time time not null,
+    coach varchar(255) not null,
+    stadium varchar(255) not null,
+    price int not null,
+    ticket_number int not null
+);
 
 
 INSERT INTO sport_activity (name, date, start_time, end_time, coach, stadium, price, ticket_number)
@@ -81,6 +117,17 @@ SELECT * FROM (SELECT 'workout', '2024-05-02', '09:00:00', '11:00:00', 'Coach1',
 WHERE NOT EXISTS (
     SELECT name, date, start_time, end_time, coach, stadium, price FROM sport_activity WHERE name = 'workout' AND date = '2024-05-02' AND start_time = '09:00:00' AND end_time = '11:00:00' AND coach = 'Coach1' AND stadium = 'GM102A' AND price = 20
 ) LIMIT 1;
+
+
+create table coupon_info(
+    id bigint primary key auto_increment,
+    name varchar(255) not null,
+    face_values int not null,
+    start_time date not null,
+    end_time date not null,
+    status varchar(255) not null,
+    user_id int not null
+);
 
 INSERT INTO coupon_info (name, face_value, start_time, end_time, status, user_id)
 VALUES

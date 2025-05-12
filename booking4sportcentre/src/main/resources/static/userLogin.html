@@ -30,6 +30,18 @@
       font-size: 12px; /* 调整字体大小为 12px */
       float: right; /* 使用 float:right 将链接靠右浮动 */
     }
+
+    .captcha-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #captchaImage {
+      height: 40px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
   </style>
 </head>
 
@@ -39,7 +51,6 @@
     <br>
     <form action="/stuLogin" method="post">
       <!-- Terms of Service checkbox and link -->
-
 
       <br>
 
@@ -66,6 +77,16 @@
         <br>
         <span id="pass-error" class="form-error">Passwords are at least 6 characters long.</span>
       </label>
+
+      <br>
+
+      <div class="captcha-wrapper">
+        <input id="verification" name="verification" type="text" placeholder="verification code"
+               aria-required="true" required autofocus value="">
+        <img id="captchaImage" src="" alt="Captcha">
+      </div>
+      <input type="hidden" id="captchaKey" name="captchaKey">
+
       <br>
 
       <div id="agreementContainer">
@@ -150,6 +171,33 @@
       alert("Please agree to the Terms of Service before logging in.");
     }
   });
+
+  function loadCaptcha() {
+    fetch('/api/captcha')
+            .then(response => response.json())
+            .then(data => {
+              const base64Image = data.image
+              document.getElementById('captchaImage').src = base64Image;
+
+              document.getElementById('captchaKey').value = data.key;
+
+              console.log('captchaVo:', data)
+            })
+            .catch(error => {
+              console.error('Error fetching captcha:', error)
+            })
+  }
+
+  // 显示错误消息
+  window.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.has('error')) {
+      alert('Login failed! Incorrect username, password or verification code!')
+    }
+  })
+
+  window.addEventListener('DOMContentLoaded', loadCaptcha);
+  document.getElementById('captchaImage').addEventListener('click', loadCaptcha);
 </script>
 </body>
 

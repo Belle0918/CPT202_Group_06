@@ -1,6 +1,6 @@
 .login-box {
   width: 350px;
-  height: 600px;
+  height: 650px;
   padding: 0 50px;
   background-color: rgba(248, 249, 250, 0.87) ;
   font-size: 20px;
@@ -97,7 +97,6 @@ legend{
   border-radius: 5px;
   border: 1px solid #339af0;
   background-color: rgba(248, 249, 250, 0.20) ;
-  
 }
 
 #pass {
@@ -107,6 +106,17 @@ legend{
   border: 1px solid #339af0;
   background-color: rgba(248, 249, 250, 0.20) ;
   margin-top: 20px;
+}
+
+#verification {
+  width: 160px;  /* 调整宽度 */
+  height: 40px;  /* 调整高度 */
+  border-radius: 5px;
+  border: 1px solid #339af0;
+  background-color: rgba(248, 249, 250, 0.20) ;
+  margin-left: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 /* 调整错误消息的字体大小 */
 .form-error {
